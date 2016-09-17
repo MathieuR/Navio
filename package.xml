@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>navio</name>
+  <version>0.4.0</version>
+  <description>ROS package to access the navio+ board.</description>
+
+  <!-- Navio code: -->
+  <author email="info@emlid.com">Igor Vereninov</author>
+  <author email="info@emlid.com">Mikhail Avkhimenia</author>
+  
+  <!-- ROS part: -->
+  <author email="mathieu.rondonneau@gmail.com">Mathieu Rondonneau</author>
+  <maintainer email="mathieu.rondonneau@gmail.com">Mathieu Rondonneau</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+  <export>
+  </export>
+</package>
