@@ -81,7 +81,6 @@ int main(int argc, char *argv[])
 	// Container for sensor data
 	sensor_msgs::Imu imu_msg = sensor_msgs::Imu();
 
-	current_time = ros::Time::now();
 	last_time = ros::Time::now();
 
 	ros::Rate r(100);
@@ -121,7 +120,7 @@ int main(int argc, char *argv[])
 		// Network output with a lowered rate
 
 		imu_msg.header.stamp = current_time;
-		imu_msg.header.frame_id = "navio";
+		imu_msg.header.frame_id = "navio_ahrs";
 
 		imu_msg.orientation.x = ahrs.getX();
 		imu_msg.orientation.y = ahrs.getY();
