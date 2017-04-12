@@ -11,7 +11,17 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 catkin_package(
-  CATKIN_DEPENDS std_msgs sensor_msgs
+  INCLUDE_DIRS
+    include
+  CATKIN_DEPENDS
+    std_msgs
+    sensor_msgs
+  LIBRARIES
+    ${PROJECT_NAME}_mpu9250
+    ${PROJECT_NAME}_gpio
+    ${PROJECT_NAME}_util
+    ${PROJECT_NAME}_pca9685
+    ${PROJECT_NAME}_i2cdev
 )
 
 ###########
@@ -19,6 +29,7 @@ catkin_package(
 ###########
 
 include_directories(
+  include/
   C++
   ${catkin_INCLUDE_DIRS}
 )
@@ -56,15 +67,15 @@ target_link_libraries(${PROJECT_NAME}_i2cdev
 
 # AHRS executable
 add_executable(${PROJECT_NAME}_ahrs src/AHRS.cpp)
-set_target_properties(${PROJECT_NAME}_ahrs PROPERTIES OUTPUT_NAME ahrs PREFIX "")
+set_target_properties(${PROJECT_NAME}_ahrs PROPERTIES OUTPUT_NAME ahrs PREFIX "${PROJECT_NAME}_")
 target_link_libraries(${PROJECT_NAME}_ahrs
   ${catkin_LIBRARIES}
-  navio_mpu9250
+  ${PROJECT_NAME}_mpu9250
 )
 
 # LED executable
 add_executable(${PROJECT_NAME}_led src/navio_led.cpp)
-set_target_properties(${PROJECT_NAME}_led PROPERTIES OUTPUT_NAME led PREFIX "")
+set_target_properties(${PROJECT_NAME}_led PROPERTIES OUTPUT_NAME led PREFIX "${PROJECT_NAME}_")
 target_link_libraries(${PROJECT_NAME}_led
   ${catkin_LIBRARIES}
   ${PROJECT_NAME}_gpio
@@ -75,10 +86,24 @@ target_link_libraries(${PROJECT_NAME}_led
 
 ## Install ------------------------------------------------------------
 
+# Install libraries
+install(TARGETS
+    ${PROJECT_NAME}_mpu9250
+    ${PROJECT_NAME}_gpio
+    ${PROJECT_NAME}_util
+    ${PROJECT_NAME}_pca9685
+    ${PROJECT_NAME}_i2cdev
+  LIBRARY DESTINATION
+    ${CATKIN_PACKAGE_LIB_DESTINATION}
+)
+
+# Install executables
 install(TARGETS
 	${PROJECT_NAME}_ahrs
 	${PROJECT_NAME}_led
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+# Install header files
+install(DIRECTORY include/${PROJECT_NAME}/   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})

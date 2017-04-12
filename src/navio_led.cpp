@@ -1,35 +1,21 @@
 /*
-Provided to you by Emlid Ltd (c) 2014.
-twitter.com/emlidtech || www.emlid.com || info@emlid.com
-
-Example: Control RGB LED with PCA9685 driver onboard of Navio shield for Raspberry Pi.
-
-RGB LED is connected to 0,1,2 channels of PWM controller PCA9685.
-As channels are connected to LED's cathodes the logic is inverted,
-that means that 0 value sets max brightness and 4095 sets min brightness.
-
-To run this example navigate to the directory containing it and run following commands:
-make
-./LED
-*/
+ *
+ *  Orignal file from Emlid Ltd (c) 2014.
+ *  twitter.com/emlidtech || www.emlid.com || info@emlid.com
+ *
+ *  Ported for ROS usage by Mathieu Rondonneau (mathieu.rondonneau@gmail.com)
+ *
+ */
 
 #include <ros/ros.h>
 #include <std_msgs/Int32.h>
+#include <navio/navio_led.h>
 
 #include <Navio/gpio.h>
 #include "Navio/Util.h"
 #include "Navio/PCA9685.h"
 
 using namespace Navio;
-
-enum led_idx {
-	LED_YELLOW,
-	LED_GREEN,
-	LED_CYAN,
-	LED_BLUE,
-	LED_MAGENTA,
-	LED_RED,
-};
 
 const uint32_t led_tab[][3] = {
 		//  B,    G,    R
